@@ -1,0 +1,22 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.mac
+    volumes:
+      - ./frontend:/app/frontend
+      - playwright_browsers:/root/.cache/ms-playwright
+    ports:
+      - "3000:3000"
+    command: npm run build-and-dev
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./backend
+    volumes:
+      - ./backend:/app/backend
+
+volumes:
+  playwright_browsers:
