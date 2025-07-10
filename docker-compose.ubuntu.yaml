@@ -17,6 +17,9 @@ services:
       context: ./backend
     volumes:
       - ./backend:/app/backend
+    ports:
+      - "8000:8000"
+    command: sh start.sh
 
 volumes:
   playwright_browsers:
