@@ -1,8 +1,7 @@
 FROM node:24-bookworm
 
 WORKDIR /app/frontend
-
-COPY package*.json ./
+COPY . /app/frontend
 
 RUN apt-get update && apt-get install -y \
     libnspr4 \
@@ -20,11 +19,8 @@ RUN apt-get update && apt-get install -y \
     libgbm1 \
     libasound2
 
-RUN rm -rf node_modules package-lock.json
+RUN rm -rf ./node_modules ./package-lock.json
 RUN npm install
 RUN npx playwright install-deps
-
-RUN npm install
-COPY . /app/frontend
 
 RUN npx playwright install chromium --with-deps
