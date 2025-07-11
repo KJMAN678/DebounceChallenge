@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useDebounce } from '../utils';
+import { useDebouncedCallback } from 'use-debounce';
 
 interface SearchResult {
   id: number;
@@ -20,13 +20,12 @@ function SearchWithDebounce() {
   const [results, setResults] = useState<SearchResult[]>([]);
   const [callCount, setCallCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const debouncedQuery = useDebounce(query, 300);
 
-  useEffect(() => {
-    if (debouncedQuery) {
+  const handleSearch = useDebouncedCallback((term: string) => {
+    if (term) {
       setIsLoading(true);
       setCallCount(prev => prev + 1);
-      axios.get<SearchResponse>(`http://localhost:8000/api/search?q=${debouncedQuery}`)
+      axios.get<SearchResponse>(`http://localhost:8000/api/search?q=${term}`)
         .then(res => {
           setResults(res.data.results);
           setIsLoading(false);
@@ -39,7 +38,11 @@ function SearchWithDebounce() {
       setResults([]);
       setIsLoading(false);
     }
-  }, [debouncedQuery]);
+  }, 300);
+
+  useEffect(() => {
+    handleSearch(query);
+  }, [query, handleSearch]);
 
   return (
     <div style={{ border: '2px solid #4CAF50', borderRadius: '8px', padding: '20px', margin: '10px', backgroundColor: '#f9fff9' }}>
