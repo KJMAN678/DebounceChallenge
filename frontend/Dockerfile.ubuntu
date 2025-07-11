@@ -1,5 +1,4 @@
 FROM node:24-bookworm
-FROM node:24-bookworm
 
 WORKDIR /app/frontend
 COPY . /app/frontend
