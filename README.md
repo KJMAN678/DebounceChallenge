@@ -27,9 +27,9 @@ $ brew install direnv
 #### 4.Maintain Dependencies
 ```sh
 # ローカルM1Mac用
-$ docker compose -f docker-compose.mac.yaml up --build
+$ docker compose -f docker-compose.mac.yaml up -d
 # Devin用
-$ docker compose -f docker-compose.ubuntu.yaml up --build
+$ docker compose -f docker-compose.ubuntu.yaml up -d
 ```
 
 #### 5.SetUp Lint
